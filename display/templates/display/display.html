@@ -3,9 +3,15 @@
   Sample Page
 {% endblock %}
 {% block content %}
+{% load static %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+
+
+<div class="container-fluid">
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -13,7 +19,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0"></h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -30,64 +36,73 @@
 
     <!-- Main content -->
     <section class="content">
+   
+      
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card" style="background-color: #343a40;">
               <div class="card-body">
-                <h5>Power Reading</h5>
-                <a href="{% url 'import_data'%}" class="btn btn-primary">import</a>
+                <h3 style="color: aliceblue;"><b>POWER READING</b></h3>
+                <a href="{% url 'import_data' %}" class="btn btn-primary">import</a>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="CurrentChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="CurrentPieChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="VoltageChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="VoltagePieChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="KwhChart" style="height: 70px; width: 200px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-body">
-                <canvas id="CurrentChart"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <canvas id="CurrentPieChart"></canvas>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-body">
-                <canvas id="VoltageChart"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <canvas id="VoltagePieChart"></canvas>
-              </div>
-            </div>
-            
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card" style="background-color: #343a40;">
               <div class="card-body">
-                <canvas id="KwhChart" style="height: 50px; width: 200px;"></canvas>
+                <div>
+                  <img src="{% static 'assets/img/Lost an item.png' %}" alt="lost and found" height="200" width="930">
+                </div>
               </div>
             </div>
           </div>
-          </div>
         </div>
-        
       </div>
-    </section>
+      
     <!-- /.content -->
   </div>
   <script>
