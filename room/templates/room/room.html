@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+{% block title %}
+    Room List
+{% endblock %}
+{% block content %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Room</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <a class="btn btn-primary" type="button" href="{% url 'add_room' %}"><i class="fas fa-plus-circle"></i> Add Room</a>
+        </div>
+        <div class="card-body">
+          <table id="datatable">
+            <thead>
+                <th>No.</th>
+                <th>Room Name</th>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+              {% for room in rooms %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ room.room_name }}</td>
+                <td>{{ room.ip_address }}</td>
+                <td> <span class="badge badge-success">Active</span></td>
+                <td>
+                  <a href="#" class="btn btn-warning">Edit</a>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+</div>
+    
+{% endblock %}

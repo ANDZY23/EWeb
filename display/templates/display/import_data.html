@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+  Import Assets
+{% endblock %}
+{% block content %}
+  <div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Import Data</h1>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- File Upload Form -->
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="card mb-4">
+                <div class="card-header bg-primary">
+                  <h3 class="card-title text-white">Upload CSV File</h3>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="csv_file">Upload File:</label>
+                    <div class="input-group">
+                      <input type="file" class="form-control-file" id="csv_file" name="csv_file" style="display: none;" onchange="updateFileName(this)" />
+                      <input type="text" class="form-control" id="file_name_display" placeholder="Choose file..." readonly />
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('csv_file').click()">Select File</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">Back</a>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  </div>
+  <script>
+    function updateFileName(input) {
+      document.getElementById('file_name_display').value = input.files[0].name
+    }
+  </script>
+{% endblock %}
