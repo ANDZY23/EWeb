@@ -6,13 +6,9 @@
 {% load static %}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
-
 
 <div class="container-fluid">
-
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -21,23 +17,15 @@
           <div class="col-sm-6">
             <h1 class="m-0"></h1>
           </div>
-          <!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            </ol>
+            <ol class="breadcrumb float-sm-right"></ol>
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">
-   
-      
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
@@ -90,6 +78,7 @@
             </div>
           </div>
         </div>
+        
         <div class="row">
           <div class="col-md-12">
             <div class="card" style="background-color: #343a40;">
@@ -102,144 +91,186 @@
           </div>
         </div>
       </div>
-      
-    <!-- /.content -->
+    </section>
   </div>
+
   <script>
-    var ctx = document.getElementById('CurrentChart').getContext('2d');
-    var myLineChart = new Chart(ctx, {
+    const data = {
+      current: [
+        { label: 'Room 1', value: 2.23 },
+        { label: 'Room 2', value: 1.69 },
+        { label: 'Room 3', value: 2.22 },
+        { label: 'Room 4', value: 1.84 },
+        { label: 'Room 5', value: 1.82 },
+      ],
+      voltage: [
+        { label: 'Room 1', value: 237.58 },
+        { label: 'Room 2', value: 230.22 },
+        { label: 'Room 3', value: 234.95 },
+        { label: 'Room 4', value: 233.72 },
+        { label: 'Room 5', value: 239.37 },
+      ],
+      kwh: [
+        { label: 'Room 1', value: 27.848 },
+        { label: 'Room 2', value: 29.099 },
+        { label: 'Room 3', value: 28.012 },
+        { label: 'Room 4', value: 27.131 },
+        { label: 'Room 5', value: 30.21 },
+      ],
+    };
+
+    // For Current Line Chart
+    const currentLabels = data.current.map(room => room.label);
+    const currentValues = data.current.map(room => room.value);
+    const currentPieValues = currentValues.map(value => (value / currentValues.reduce((a, b) => a + b, 0)) * 100);
+
+    var ctxCurrent = document.getElementById('CurrentChart').getContext('2d');
+    var myCurrentChart = new Chart(ctxCurrent, {
       type: 'line',
       data: {
-        labels: [], // X-axis labels
+        labels: currentLabels,
         datasets: [{
-          label: 'Sample Data',
-          data: [], // Y-axis data points
-          fill: false,  // Don't fill the area under the line
-          borderColor: 'rgba(75, 192, 192, 1)',  // Line color
-          tension: 0.1  // Line curve tension
+          label: 'Current (A)',
+          data: currentValues,
+          fill: false,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          tension: 0.1
         }]
       },
       options: {
         scales: {
           x: {
-            beginAtZero: true // Start X-axis at 0
+            beginAtZero: true
           },
           y: {
-            beginAtZero: true // Start Y-axis at 0
+            beginAtZero: true
           }
         }
       }
     });
-  </script>
-  <script>
-    var ctx = document.getElementById('CurrentPieChart').getContext('2d');
-    var myPieChart = new Chart(ctx, {
+
+    var ctxCurrentPie = document.getElementById('CurrentPieChart').getContext('2d');
+    var myCurrentPieChart = new Chart(ctxCurrentPie, {
       type: 'pie',
       data: {
-        labels: [],  // Labels for each segment
+        labels: currentLabels,
         datasets: [{
-          data: [],  // Data for each segment
+          data: currentPieValues,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',  // Color for Red
-            'rgba(54, 162, 235, 0.6)',  // Color for Blue
-            'rgba(255, 206, 86, 0.6)'   // Color for Yellow
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)'
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
           ],
           borderWidth: 1
         }]
       },
       options: {
-        responsive: true,  // Makes the chart responsive
+        responsive: true,
         plugins: {
           legend: {
-            position: 'top'  // Legend position
+            position: 'top'
           }
         }
       }
     });
-  </script>
-  <script>
-    var ctx = document.getElementById('VoltageChart').getContext('2d');
-    var myLineChart = new Chart(ctx, {
+
+    // For Voltage Line Chart
+    const voltageLabels = data.voltage.map(room => room.label);
+    const voltageValues = data.voltage.map(room => room.value);
+    const voltagePieValues = voltageValues.map(value => (value / voltageValues.reduce((a, b) => a + b, 0)) * 100);
+
+    var ctxVoltage = document.getElementById('VoltageChart').getContext('2d');
+    var myVoltageChart = new Chart(ctxVoltage, {
       type: 'line',
       data: {
-        labels: [], // X-axis labels
+        labels: voltageLabels,
         datasets: [{
-          label: 'Sample Data',
-          data: [], // Y-axis data points
-          fill: false,  // Don't fill the area under the line
-          borderColor: 'rgba(75, 192, 192, 1)',  // Line color
-          tension: 0.1  // Line curve tension
+          label: 'Voltage (V)',
+          data: voltageValues,
+          fill: false,
+          borderColor: 'rgba(255, 206, 86, 1)',
+          tension: 0.1
         }]
       },
       options: {
         scales: {
           x: {
-            beginAtZero: true // Start X-axis at 0
+            beginAtZero: true
           },
           y: {
-            beginAtZero: true // Start Y-axis at 0
+            beginAtZero: true
           }
         }
       }
     });
-  </script>
-  <script>
-    var ctx = document.getElementById('VoltagePieChart').getContext('2d');
-    var myPieChart = new Chart(ctx, {
+
+    var ctxVoltagePie = document.getElementById('VoltagePieChart').getContext('2d');
+    var myVoltagePieChart = new Chart(ctxVoltagePie, {
       type: 'pie',
       data: {
-        labels: [],  // Labels for each segment
+        labels: voltageLabels,
         datasets: [{
-          data: [],  // Data for each segment
+          data: voltagePieValues,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',  // Color for Red
-            'rgba(54, 162, 235, 0.6)',  // Color for Blue
-            'rgba(255, 206, 86, 0.6)'   // Color for Yellow
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)'
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
           ],
           borderWidth: 1
         }]
       },
       options: {
-        responsive: true,  // Makes the chart responsive
+        responsive: true,
         plugins: {
           legend: {
-            position: 'top'  // Legend position
+            position: 'top'
           }
         }
       }
     });
-  </script>
-  <script>
-    var ctx = document.getElementById('KwhChart').getContext('2d');
-    var myLineChart = new Chart(ctx, {
+
+    // For kWh Chart
+    const kWhLabels = data.kwh.map(room => room.label);
+    const kWhValues = data.kwh.map(room => room.value);
+
+    var ctxKwh = document.getElementById('KwhChart').getContext('2d');
+    var myKwhChart = new Chart(ctxKwh, {
       type: 'line',
       data: {
-        labels: [], // X-axis labels
+        labels: kWhLabels,
         datasets: [{
-          label: 'Sample Data',
-          data: [], // Y-axis data points
-          fill: false,  // Don't fill the area under the line
-          borderColor: 'rgba(75, 192, 192, 1)',  // Line color
-          tension: 0.1  // Line curve tension
+          label: 'kWh (kiloWatt-hour)',
+          data: kWhValues,
+          fill: false,
+          borderColor: 'rgba(153, 102, 255, 1)', // Different color for KWh Chart
+          tension: 0.1
         }]
       },
       options: {
         scales: {
           x: {
-            beginAtZero: true // Start X-axis at 0
+            beginAtZero: true
           },
           y: {
-            beginAtZero: true // Start Y-axis at 0
+            beginAtZero: true
           }
         }
       }
